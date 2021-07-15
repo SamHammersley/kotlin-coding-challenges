@@ -3,8 +3,36 @@ package com.igorwojda.matrix.spiralmatrixgenerator
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-private fun generateSpiralMatrix(n: Int): List<MutableList<Int?>> {
-    TODO("not implemented")
+private fun generateSpiralMatrix(n: Int): List<MutableList<Int>> {
+    val matrix = Array(n) { Array(n) { n*n } }
+    var currentValue = 0
+    var currentRow = 0
+    var currentColumn = 0
+
+    vectors(n).forEach { vector ->
+        val direction = vector.first
+        val distance = vector.second
+
+        repeat(distance) {
+            matrix[currentRow][currentColumn] = 1 + currentValue++
+
+            when (direction) {
+                0 -> currentColumn++
+                1 -> currentRow++
+                2 -> currentColumn--
+                3 -> currentRow--
+            }
+        }
+    }
+
+    return matrix.map { it.toMutableList() }
+}
+
+private fun vectors(n: Int): List<Pair<Int, Int>> {
+    val vectors = (n*2-1 downTo 2)
+        .mapIndexed { index, distance -> Pair((1 + index) % 4, distance / 2) }
+
+    return mutableListOf(Pair(0, n-1)).plus(vectors)
 }
 
 private class Test {

@@ -2,9 +2,33 @@ package com.igorwojda.binarytree.validate
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import java.util.*
+import javax.print.attribute.IntegerSyntax
+import kotlin.Comparator
+import kotlin.collections.ArrayDeque
+import kotlin.collections.HashSet
 
-private fun isValidSearchBinaryTree(node: Node<Int>): Boolean {
-    TODO("not implemented")
+// ---------Tree------------
+//
+//           10
+//          /
+//         5
+//        / \
+//       1   6
+//      / \
+//     0  999
+// --------------------------
+// min of the right side should be greater than the current node's value.
+// max of the left side should be smaller than the current node's value.
+private fun isValidSearchBinaryTree(node: Node<Int>, min: Int = Integer.MIN_VALUE, max: Int = Integer.MAX_VALUE): Boolean {
+    if (node.data > max || node.data < min) {
+        return false
+    }
+
+    val validLeft = if (node.left == null) true else isValidSearchBinaryTree(node.left!!, min, node.data)
+    val validRight = if (node.right == null) true else isValidSearchBinaryTree(node.right!!, node.data, max)
+
+    return validLeft && validRight
 }
 
 private class Test {

@@ -2,9 +2,10 @@ package com.igorwojda.integer.factorial
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import java.lang.Integer.max
 
-private fun factorial(n: Int): Int {
-    TODO("not implemented")
+private fun factorial(n: Int, c: Int = n): Int {
+    return if (n <= 1) max(c, 1) else factorial(n - 1, c * (n - 1))
 }
 
 class RecursiveFactorial {

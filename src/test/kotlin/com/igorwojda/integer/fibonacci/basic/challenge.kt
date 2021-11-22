@@ -4,7 +4,17 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
 private fun fibonacci(n: Int): Int {
-    TODO("not implemented")
+    var fibn2 = 0
+    var fibn1 = 1
+    var fibn = fibn2 + fibn1
+
+    for (i in 1..n) {
+        fibn2 = fibn1
+        fibn1 = fibn
+        fibn = fibn2 + fibn1
+    }
+
+    return fibn2
 }
 
 private class Test {
